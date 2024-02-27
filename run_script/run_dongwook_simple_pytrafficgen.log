@@ -1,0 +1,13 @@
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 23.0.1.0
+gem5 compiled Feb 22 2024 03:25:38
+gem5 started Feb 23 2024 08:56:12
+gem5 executing on 403fa31dd0c1, pid 5222
+command line: /home/gem5/build/ARM/gem5.opt --outdir /home/gem5/run_script/output_dongwook_simple_pytrafficgen /home/gem5/configs/example/dongwook_simple_pytrafficgen.py --num-cpus 2 --num-dmas 4 --num-dirs 4 --traffic_mode_cpu trace --traffic_mode_dma trace --trace_duration 500000000 --mem-type DDR5_4400_4x8 --sys-clock 900MHz
+
+dongwook debug] args.num_cpus:  2
+dongwook debug] args.num_dmas:  4
+dongwook debug] args.num_dirs:  4
+dongwook debug] system:  <orphan System>

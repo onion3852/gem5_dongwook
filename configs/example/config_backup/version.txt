@@ -1,0 +1,6 @@
+## ruby_pytrafficgen.py
+- 231213
+	MemTest -> PyTrafficGen
+	trace
+- 231214
+	CommMonitor attach to DMA and memory controller
