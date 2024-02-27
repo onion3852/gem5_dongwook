@@ -142,27 +142,23 @@ for (i, dma) in enumerate(dmas):
 
 # dongwook start
 from common.Caches import *
-
 # from src.mem.XBar import *
 
 # L2 bus
 system.l2bus = L2XBar()
 
-# L1 cache
+# L1 & L2 cache
 for i in range(args.num_cpus):
     system.cpu[i].icache = L1_ICache()
     system.cpu[i].dcache = L1_DCache()
     system.cpu[i].icache.mem_side = system.l2bus.cpu_side_ports
     system.cpu[i].dcache.mem_side = system.l2bus.cpu_side_ports
-
-# L2 cache
-system.cpu.l2cache = L2Cache()
-
-# connect L2 cache and L2 bus
-system.cpu.l2cache.mem_side = system.l2bus.mem_side_ports
+    
+    system.cpu[i].l2cache = L2Cache()
+    system.cpu[i].l2cache.mem_side = system.l2bus.cpu_side_ports
 
 # L3 bus
-system.l2bus = L3XBar()
+system.l3bus = L3XBar()
 
 # L3 cache
 system.cpu.l3cache = L3Cache()
