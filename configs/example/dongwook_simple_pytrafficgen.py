@@ -115,6 +115,8 @@ system = System(
     ],
 )
 
+print("dongwook debug] len(system.mem_ranges): ", len(system.mem_ranges))
+
 system.mmap_using_noreserve = True
 
 
@@ -136,23 +138,27 @@ for (i, dma) in enumerate(dmas):
     dma.port = comm_monitor_dmas[i].cpu_side_port
     dma_ports.append(comm_monitor_dmas[i].mem_side_port)
 
+print("dongwook debug] args: ", args)
 
 from common.CacheConfig import *
 from common.Caches import *
 
+# L1 bus
+system.cpu.l1bus = L1XBar()
 # L2 bus
-system.l2bus = L2XBar()
+system.cpu.l2bus = L2XBar()
 
 # L1 cache
 system.cpu.icache = L1_ICache()
 system.cpu.dcache = L1_DCache()
-system.cpu.icache.cpu_side = system.cpu.icache_port
-system.cpu.dcache.cpu_side = system.cpu.dcache_port
-system.cpu.icache.mem_side = system.l2bus.cpu_side_ports
-system.cpu.dcache.mem_side = system.l2bus.cpu_side_ports
+system.cpu.port = system.cpu.l1bus.cpu_side_ports
+system.cpu.icache.cpu_side = system.cpu.l1bus.mem_side_ports
+system.cpu.dcache.cpu_side = system.cpu.l1bus.mem_side_ports
+system.cpu.icache.mem_side = system.cpu.l2bus.cpu_side_ports
+system.cpu.dcache.mem_side = system.cpu.l2bus.cpu_side_ports
 # L2 cache 
 system.cpu.l2cache = L2Cache()
-system.cpu.l2cache.cpu_side = system.l2bus.mem_side_ports
+system.cpu.l2cache.cpu_side = system.cpu.l2bus.mem_side_ports
 
 # L3 bus
 system.l3bus = L3XBar()
@@ -180,7 +186,6 @@ system.l3cache.mem_side = system.membus.cpu_side_ports
 # system.membus.cpu_side_ports = membus_cpu_side
 
 # connect comm_monitor_dmas to membus
-print("dongwook debug] HERE_0")
 for i in range(args.num_dmas):
     comm_monitor_dmas[i].mem_side_port = system.membus.cpu_side_ports
 
@@ -190,9 +195,36 @@ for i in range(args.num_dmas):
 #    system.comm_monitor_mem_devices = comm_monitor_mems
 #else:
 #    comm_monitor_mems = []
+#for i in range (args.num_dirs):
+#    comm_monitor_mems[i].cpu_side_port = system.membus.mem_side_ports
+    
+#system.mem_ctrl = MemCtrl()
+#system.mem_ctrl.dram = DDR5_4400_4x8()
+#system.mem_ctrl.dram.range = system.mem_ranges[0]
+#system.mem_ctrl.port = system.membus.mem_side_ports
 
-###### how to connect comm_monitor_mem_devices & crossbar?
-
+mem_ctrls = []
+drams = []
+for i in range (args.num_dmas):
+    for j in range(len(system.mem_ranges)):
+        mem_ctrls.append(MemCtrl())
+        drams.append(DDR5_4400_4x8())
+        drams[i] = DDR5_4400_4x8()
+        mem_ctrls[i*3 + j].dram = drams[i]
+        #mem_ctrls[i*3 + j].dram[i] = DDR5_4400_4x8()
+        mem_ctrls[i*3 + j].dram.range = system.mem_ranges[j]
+        #mem_ctrls[i*3 + j].dram[i].range = system.mem_ranges[j]
+        mem_ctrls[i*3 + j].port = system.membus.mem_side_ports
+        #system.mem_ctrl0 = MemCtrl()
+        #system.mem_ctrl1 = MemCtrl()
+        #system.mem_ctrl0.dram = DDR5_4400_4x8()
+        #system.mem_ctrl1.dram = DDR5_4400_4x8()
+        #system.mem_ctrl0.dram.range = system.mem_ranges[0]
+        #system.mem_ctrl1.dram.range = system.mem_ranges[1]
+        #system.mem_ctrl0.port = system.membus.mem_side_ports
+        #system.mem_ctrl1.port = system.membus.mem_side_ports
+print("dongwook debig] drams[] = ", drams)
+system.mem_ctrls = mem_ctrls
 
 # Create a top-level voltage domain and clock domain
 system.voltage_domain = VoltageDomain(voltage=args.sys_voltage)
