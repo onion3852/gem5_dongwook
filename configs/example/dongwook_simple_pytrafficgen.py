@@ -72,21 +72,27 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-# dongwook start
 ## argument print for debug
 print("dongwook debug] args.num_cpus: ", args.num_cpus)
 print("dongwook debug] args.num_dmas: ", args.num_dmas)
 print("dongwook debug] args.num_dirs: ", args.num_dirs)
-# dongwook end
 
-args.l1d_size = "32kB"
-args.l1i_size = "32kB"
-args.l1d_assoc = 4
-args.l1i_assoc = 4
-args.l2_size = "128kB"
-args.l2_assoc = 4
-args.l3_size = "2MB"
-args.l3_assoc = 2
+#args.l1d_size = "32kB"
+#args.l1i_size = "32kB"
+args.icache_size = "32kB"
+args.dcache_size = "32kB"
+#args.l1d_assoc = 4
+#args.l1i_assoc = 4
+args.icache_assoc = 4
+args.dcache_assoc = 4
+#args.l2_size = "128kB"
+args.l2cache_size = "128kB"
+#args.l2_assoc = 4
+args.l2cache_assoc = 4
+#args.l3_size = "2MB"
+args.l3cache_size = '2MB'
+#args.l3_assoc = 2
+args.l3cache_assoc = 16
 
 block_size = 64
 
@@ -97,7 +103,7 @@ if args.num_cpus > block_size:
     )
     sys.exit(1)
 
-cpus = [PyTrafficGen() for i in range(args.num_cpus)]
+cpus = PyTrafficGen()
 
 system = System(
     cpu=cpus,
@@ -111,87 +117,82 @@ system = System(
 
 system.mmap_using_noreserve = True
 
-# dongwook start
-print("dongwook debug] system: ", system)
-# dongwook end
 
 if args.num_dmas > 0:
     dmas = [PyTrafficGen() for i in range(args.num_dmas)]
     system.dma_devices = dmas
 
-    # dongwook start
     # comm_monitor for dmas
     comm_monitor_dmas = [CommMonitor() for i in range(args.num_dmas)]
     system.comm_monitor_dma_devices = comm_monitor_dmas
-    # dongwook end
 else:
     dmas = []
-    # dongwook start
     comm_monitor_dmas = []
-    # dongwook end
 
 dma_ports = []
 for (i, dma) in enumerate(dmas):
-    # dongwook start
     # dma_ports.append(dma.test)
     # dma_ports.append(dma.port)
     dma.port = comm_monitor_dmas[i].cpu_side_port
     dma_ports.append(comm_monitor_dmas[i].mem_side_port)
-    # dongwook end
 
 
-# dongwook start
+from common.CacheConfig import *
 from common.Caches import *
-# from src.mem.XBar import *
 
 # L2 bus
 system.l2bus = L2XBar()
 
-# L1 & L2 cache
-for i in range(args.num_cpus):
-    system.cpu[i].icache = L1_ICache()
-    system.cpu[i].dcache = L1_DCache()
-    system.cpu[i].icache.mem_side = system.l2bus.cpu_side_ports
-    system.cpu[i].dcache.mem_side = system.l2bus.cpu_side_ports
-    
-    system.cpu[i].l2cache = L2Cache()
-    system.cpu[i].l2cache.mem_side = system.l2bus.cpu_side_ports
+# L1 cache
+system.cpu.icache = L1_ICache()
+system.cpu.dcache = L1_DCache()
+system.cpu.icache.cpu_side = system.cpu.icache_port
+system.cpu.dcache.cpu_side = system.cpu.dcache_port
+system.cpu.icache.mem_side = system.l2bus.cpu_side_ports
+system.cpu.dcache.mem_side = system.l2bus.cpu_side_ports
+# L2 cache 
+system.cpu.l2cache = L2Cache()
+system.cpu.l2cache.cpu_side = system.l2bus.mem_side_ports
 
 # L3 bus
 system.l3bus = L3XBar()
+system.cpu.l2cache.mem_side = system.l3bus.cpu_side_ports
 
 # L3 cache
-system.cpu.l3cache = L3Cache()
+system.l3cache = L3Cache()
 
 # connect L3 cache has L3 bus
-system.cpu.l3cache.cpu_side = system.l3bus.mem_side_ports
+system.l3cache.cpu_side = system.l3bus.mem_side_ports
 
 # membus
 system.membus = SystemXBar()
-systemXbar_ports = []
 
-# L3 cache has 2 mem_side ports
-system.cpu.l3cache.mem_side = []
-system.membus.cpu_side_ports = []
-for i in range(2):
-    system.cpu.l3cache.mem_side[i]
-    system.membus.cpu_side_ports[i]
-    system.cpu.l3cache.mem_side[i] = system.membus.cpu_side_ports[i]
-    systemXbar_ports.append(system.membus.cpu_side_ports[i])
+# connect L3 cache and membus
+system.l3cache.mem_side = system.membus.cpu_side_ports
 
-# dongwook start
-# comm_monitor for drams
-if args.num_dirs > 0:
-    comm_monitor_mems = [CommMonitor() for i in range(args.num_dirs)]
-    system.comm_monitor_mem_devices = comm_monitor_mems
-else:
-    comm_monitor_mems = []
+## L3 cache has two mem_side_ports
+# l3cache_mem_side = []
+# membus_cpu_side = []
+# for i in range(2):
+#     l3cache_mem_side.append()
+#     membus_cpu_side.append()
+# system.cpu.l3cache.mem_side = l3cache_mem_side
+# system.membus.cpu_side_ports = membus_cpu_side
+
+# connect comm_monitor_dmas to membus
+print("dongwook debug] HERE_0")
+for i in range(args.num_dmas):
+    comm_monitor_dmas[i].mem_side_port = system.membus.cpu_side_ports
+
+## comm_monitor for drams
+#if args.num_dirs > 0:
+#    comm_monitor_mems = [CommMonitor() for i in range(args.num_dirs)]
+#    system.comm_monitor_mem_devices = comm_monitor_mems
+#else:
+#    comm_monitor_mems = []
 
 ###### how to connect comm_monitor_mem_devices & crossbar?
-# dongwook end
 
-
-# dongwook end
 
 # Create a top-level voltage domain and clock domain
 system.voltage_domain = VoltageDomain(voltage=args.sys_voltage)
@@ -199,20 +200,20 @@ system.clk_domain = SrcClockDomain(
     clock=args.sys_clock, voltage_domain=system.voltage_domain
 )
 
-# Create a seperate clock domain for memory controller
-for i in range(args.num_dirs):
-    if len(system.mem_ranges) > 1:
-        for j in range(len(system.mem_ranges)):
-            # print("middk_debug] i+j", len(system.mem_ranges)*i+j)
-            system.mem_ctrls[
-                len(system.mem_ranges) * i + j
-            ].clk_domain = SrcClockDomain(
-                clock="600MHz", voltage_domain=system.voltage_domain
-            )
-    else:
-        system.mem_ctrls[i].clk_domain = SrcClockDomain(
-            clock="600MHz", voltage_domain=system.voltage_domain
-        )
+## Create a seperate clock domain for memory controller
+#for i in range(args.num_dirs):
+#    if len(system.mem_ranges) > 1:
+#        for j in range(len(system.mem_ranges)):
+#            # print("middk_debug] i+j", len(system.mem_ranges)*i+j)
+#            system.mem_ctrls[
+#                len(system.mem_ranges) * i + j
+#            ].clk_domain = SrcClockDomain(
+#                clock="600MHz", voltage_domain=system.voltage_domain
+#            )
+#    else:
+#        system.mem_ctrls[i].clk_domain = SrcClockDomain(
+#            clock="600MHz", voltage_domain=system.voltage_domain
+#        )
 # Create a seperate clock domain for dma devices
 for i in range(args.num_dmas):
     system.dma_devices[i].clk_domain = SrcClockDomain(
@@ -220,7 +221,6 @@ for i in range(args.num_dmas):
     )
 
 
-# dongwook start
 ## PyTrafficGen create functions
 def createRandomTraffic(tgen):
     yield tgen.createRandom(
@@ -295,8 +295,6 @@ def createTraceTraffic_dma3(tgen):
     yield tgen.createExit(0)
 
 
-# dongwook end
-
 # -----------------------
 # run simulation
 # -----------------------
@@ -311,7 +309,6 @@ m5.ticks.setGlobalFrequency("1ps")
 # instantiate configuration
 m5.instantiate()
 
-# dongwook start
 if args.traffic_mode_cpu == "linear":
     for i in range(args.num_cpus):
         root.system.cpu[i].start(createLinearTraffic(root.system.cpu[i]))
@@ -348,12 +345,9 @@ elif args.traffic_mode_dma == "trace":
     root.system.dma_devices[3].start(
         createTraceTraffic_dma3(root.system.dma_devices[3])
     )
-    # for i in range(args.num_dmas):
-    #    root.system.dma_devices[i].start(createTraceTraffic(root.system.dma_devices[i]))
 else:
     print("Wrong DMA traffic type! Exiting!")
     exit()
-# dongwook end
 
 # simulate until program terminates
 exit_event = m5.simulate(args.abs_max_tick)

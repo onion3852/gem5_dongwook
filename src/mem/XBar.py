@@ -201,8 +201,6 @@ class L3XBar(CoherentXBar):
     # the point of unification, it connects the dcache and the icache
     # to the first level of unified cache.
     point_of_unification = True
-
-
 # dongwook end
 
 

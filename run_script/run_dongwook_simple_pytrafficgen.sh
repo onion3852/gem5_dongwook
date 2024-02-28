@@ -7,7 +7,7 @@ GEM5_RUN_PATH=/home/gem5/run_script
 $GEM5_PATH/gem5.opt \
 	--outdir $GEM5_RUN_PATH/output_dongwook_simple_pytrafficgen \
 	$CONFIG_PATH/dongwook_simple_pytrafficgen.py \
-	--num-cpus 2 \
+	--num-cpus 1 \
 	--num-dmas 4 \
 	--num-dirs 4 \
 	--traffic_mode_cpu trace \
@@ -23,3 +23,5 @@ $GEM5_PATH/gem5.opt \
 	#--traffic_mode linear \
 	#--mem-channels 2 \
 	#--trace_duration 4130000000 \
+    #--num-cpus 2 \
+	

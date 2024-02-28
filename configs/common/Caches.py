@@ -56,6 +56,9 @@ class L1Cache(Cache):
     response_latency = 2
     mshrs = 4
     tgts_per_mshr = 20
+    # dongwook start
+    size = '32kB'
+    # dongwook end
 
 
 class L1_ICache(L1Cache):
@@ -76,11 +79,14 @@ class L2Cache(Cache):
     mshrs = 20
     tgts_per_mshr = 12
     write_buffers = 8
+    # dongwook start
+    size = '128kB'
+    # dongwook end
 
 
 # dongwook start
 # L3 Cache
-# specifications are modifiable
+# specs are modifiable
 class L3Cache(Cache):
     assoc = 16
     tag_latency = 32
@@ -89,8 +95,8 @@ class L3Cache(Cache):
     mshrs = 32
     tgts_per_mshr = 24
     write_buffers = 16
-
-
+    
+    size = '2MB'
 # dongwook end
 
 
