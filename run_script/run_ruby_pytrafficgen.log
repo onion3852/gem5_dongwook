@@ -3,16 +3,17 @@ gem5 Simulator System.  https://www.gem5.org
 gem5 is copyrighted software; use the --copyright option for details.
 
 gem5 version 23.0.1.0
-gem5 compiled Dec 11 2023 14:53:29
-gem5 started Feb  6 2024 06:49:28
-gem5 executing on 403fa31dd0c1, pid 13915
-command line: /home/gem5/build/ARM/gem5.opt --outdir /home/gem5/run_script/output_ruby_pytrafficgen /home/gem5/configs/example/ruby_pytrafficgen.py --network=garnet --topology FalconBusArch --num-cpus 2 --num-dmas 4 --num-dirs 4 --traffic_mode_cpu trace --traffic_mode_dma trace --trace_duration 250000 --mem-type DDR5_4400_4x8 --sys-clock 900MHz --ruby-clock 600MHz
+gem5 compiled Feb 22 2024 03:25:38
+gem5 started Feb 29 2024 08:11:31
+gem5 executing on 403fa31dd0c1, pid 14992
+command line: /home/gem5/build/ARM/gem5.opt --outdir /home/gem5/run_script/output_ruby_pytrafficgen /home/gem5/configs/example/ruby_pytrafficgen.py --network=garnet --topology FalconBusArch --num-cpus 2 --num-dmas 4 --num-dirs 4 --traffic_mode_cpu trace --traffic_mode_dma trace --trace_duration 500000000 --mem-type DDR5_4400_4x8 --sys-clock 900MHz --ruby-clock 600MHz
 
 middk_debug] args.num_cpus : 2
 middk_debug] args.num_dmas : 4
 middk_debug] args.num_dirs : 4
 middk_debug] hnf start_index_bit: 6
 middk_debug] hnf block_size: 0
+dir_cntrls:  [<m5.objects.Memory_Controller.Memory_Controller object at 0x7ffb27a189d0>, <m5.objects.Memory_Controller.Memory_Controller object at 0x7ffb27a19c00>, <m5.objects.Memory_Controller.Memory_Controller object at 0x7ffb27a1ae30>, <m5.objects.Memory_Controller.Memory_Controller object at 0x7ffb27a280a0>]
 middk_debug]  <orphan System>.cpu0.l1i
 middk_debug]  <orphan System>.cpu0.l1d
 middk_debug]  <orphan System>.cpu0.l2
@@ -28,35 +29,5 @@ middk_debug]  <orphan System>.ruby.dma_rni0.cntrl
 middk_debug]  <orphan System>.ruby.dma_rni1.cntrl
 middk_debug]  <orphan System>.ruby.dma_rni2.cntrl
 middk_debug]  <orphan System>.ruby.dma_rni3.cntrl
-dongwook debug] int_link 10
-dongwook debug] int_link 11
-dongwook debug] int_link 12
-dongwook debug] int_link 22
-dongwook debug] int_link 26
-dongwook debug] int_link 30
-dongwook debug] int_link 13
-dongwook debug] int_link 14
-dongwook debug] int_link 15
-dongwook debug] int_link 23
-dongwook debug] int_link 27
-dongwook debug] int_link 31
-dongwook debug] int_link 16
-dongwook debug] int_link 17
-dongwook debug] int_link 18
-dongwook debug] int_link 24
-dongwook debug] int_link 28
-dongwook debug] int_link 32
-dongwook debug] int_link 19
-dongwook debug] int_link 20
-dongwook debug] int_link 21
-dongwook debug] int_link 25
-dongwook debug] int_link 29
-dongwook debug] int_link 33
-dongwook debug] router 3
-dongwook debug] router 4
-dongwook debug] router 5
-dongwook debug] ext_link 7
-dongwook debug] ext_link 8
-dongwook debug] ext_link 9
-dongwook debug] ext_link 10
-Exiting @ tick 250000 because system.cpu0 has encountered the exit state and will terminate the simulation.
+Exiting @ tick 500000000 because system.cpu0 has encountered the exit state and will terminate the simulation.
+

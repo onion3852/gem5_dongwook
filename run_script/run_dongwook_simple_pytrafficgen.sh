@@ -14,7 +14,7 @@ $GEM5_PATH/gem5.opt \
 	--traffic_mode_dma trace \
 	--trace_duration 500000000 \
 	--mem-type DDR5_4400_4x8 \
-    --mem-channels 2 \
+    --mem-channels 1 \
 	--sys-clock "900MHz" \
 	| tee run_dongwook_simple_pytrafficgen.log
 

@@ -444,6 +444,9 @@ def create_system_falcon(
             # middk end
             % protocol
         )
+        # dongwook start
+        print("dongwook debug] dir_cntrls: ", dir_cntrls)
+        # dongwook end
     except:
         print(f"Error: could not create sytem for ruby protocol {protocol}")
         raise

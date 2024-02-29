@@ -696,6 +696,184 @@
                 "is_source": "True"
             }
         },
+        "crossbars": [
+            {
+                "type": "NoncoherentXBar",
+                "cxx_class": "gem5::NoncoherentXBar",
+                "name": "crossbars0",
+                "path": "system.crossbars0",
+                "clk_domain": "system.clk_domain",
+                "eventq_index": 0,
+                "forward_latency": 1,
+                "frontend_latency": 2,
+                "header_latency": 1,
+                "power_model": [],
+                "power_state": {
+                    "type": "PowerState",
+                    "cxx_class": "gem5::PowerState",
+                    "name": "power_state",
+                    "path": "system.crossbars0.power_state",
+                    "clk_gate_bins": 20,
+                    "clk_gate_max": 1000000000000,
+                    "clk_gate_min": 1000,
+                    "default_state": "UNDEFINED",
+                    "eventq_index": 0,
+                    "leaders": [],
+                    "possible_states": []
+                },
+                "response_latency": 2,
+                "use_default_range": false,
+                "width": 32,
+                "cpu_side_ports": {
+                    "role": "GEM5 RESPONDER",
+                    "peer": [
+                        "system.membus.mem_side_ports[0]"
+                    ],
+                    "is_source": "False"
+                },
+                "mem_side_ports": {
+                    "role": "GEM5 REQUESTOR",
+                    "peer": [
+                        "system.mem_ctrls00.port",
+                        "system.mem_ctrls01.port",
+                        "system.mem_ctrls02.port"
+                    ],
+                    "is_source": "True"
+                }
+            },
+            {
+                "type": "NoncoherentXBar",
+                "cxx_class": "gem5::NoncoherentXBar",
+                "name": "crossbars1",
+                "path": "system.crossbars1",
+                "clk_domain": "system.clk_domain",
+                "eventq_index": 0,
+                "forward_latency": 1,
+                "frontend_latency": 2,
+                "header_latency": 1,
+                "power_model": [],
+                "power_state": {
+                    "type": "PowerState",
+                    "cxx_class": "gem5::PowerState",
+                    "name": "power_state",
+                    "path": "system.crossbars1.power_state",
+                    "clk_gate_bins": 20,
+                    "clk_gate_max": 1000000000000,
+                    "clk_gate_min": 1000,
+                    "default_state": "UNDEFINED",
+                    "eventq_index": 0,
+                    "leaders": [],
+                    "possible_states": []
+                },
+                "response_latency": 2,
+                "use_default_range": false,
+                "width": 32,
+                "cpu_side_ports": {
+                    "role": "GEM5 RESPONDER",
+                    "peer": [
+                        "system.membus.mem_side_ports[1]"
+                    ],
+                    "is_source": "False"
+                },
+                "mem_side_ports": {
+                    "role": "GEM5 REQUESTOR",
+                    "peer": [
+                        "system.mem_ctrls03.port",
+                        "system.mem_ctrls04.port",
+                        "system.mem_ctrls05.port"
+                    ],
+                    "is_source": "True"
+                }
+            },
+            {
+                "type": "NoncoherentXBar",
+                "cxx_class": "gem5::NoncoherentXBar",
+                "name": "crossbars2",
+                "path": "system.crossbars2",
+                "clk_domain": "system.clk_domain",
+                "eventq_index": 0,
+                "forward_latency": 1,
+                "frontend_latency": 2,
+                "header_latency": 1,
+                "power_model": [],
+                "power_state": {
+                    "type": "PowerState",
+                    "cxx_class": "gem5::PowerState",
+                    "name": "power_state",
+                    "path": "system.crossbars2.power_state",
+                    "clk_gate_bins": 20,
+                    "clk_gate_max": 1000000000000,
+                    "clk_gate_min": 1000,
+                    "default_state": "UNDEFINED",
+                    "eventq_index": 0,
+                    "leaders": [],
+                    "possible_states": []
+                },
+                "response_latency": 2,
+                "use_default_range": false,
+                "width": 32,
+                "cpu_side_ports": {
+                    "role": "GEM5 RESPONDER",
+                    "peer": [
+                        "system.membus.mem_side_ports[2]"
+                    ],
+                    "is_source": "False"
+                },
+                "mem_side_ports": {
+                    "role": "GEM5 REQUESTOR",
+                    "peer": [
+                        "system.mem_ctrls06.port",
+                        "system.mem_ctrls07.port",
+                        "system.mem_ctrls08.port"
+                    ],
+                    "is_source": "True"
+                }
+            },
+            {
+                "type": "NoncoherentXBar",
+                "cxx_class": "gem5::NoncoherentXBar",
+                "name": "crossbars3",
+                "path": "system.crossbars3",
+                "clk_domain": "system.clk_domain",
+                "eventq_index": 0,
+                "forward_latency": 1,
+                "frontend_latency": 2,
+                "header_latency": 1,
+                "power_model": [],
+                "power_state": {
+                    "type": "PowerState",
+                    "cxx_class": "gem5::PowerState",
+                    "name": "power_state",
+                    "path": "system.crossbars3.power_state",
+                    "clk_gate_bins": 20,
+                    "clk_gate_max": 1000000000000,
+                    "clk_gate_min": 1000,
+                    "default_state": "UNDEFINED",
+                    "eventq_index": 0,
+                    "leaders": [],
+                    "possible_states": []
+                },
+                "response_latency": 2,
+                "use_default_range": false,
+                "width": 32,
+                "cpu_side_ports": {
+                    "role": "GEM5 RESPONDER",
+                    "peer": [
+                        "system.membus.mem_side_ports[3]"
+                    ],
+                    "is_source": "False"
+                },
+                "mem_side_ports": {
+                    "role": "GEM5 REQUESTOR",
+                    "peer": [
+                        "system.mem_ctrls09.port",
+                        "system.mem_ctrls10.port",
+                        "system.mem_ctrls11.port"
+                    ],
+                    "is_source": "True"
+                }
+            }
+        ],
         "dma_devices": [
             {
                 "type": "PyTrafficGen",
@@ -1143,7 +1321,7 @@
                         "leaders": [],
                         "possible_states": []
                     },
-                    "range": "2147483648:4294967296",
+                    "range": "2147483648:4294967296:0:1048640:2097280",
                     "ranks_per_channel": 1,
                     "read_buffer_size": 64,
                     "tAAD": 454,
@@ -1228,7 +1406,7 @@
                 "write_low_thresh_perc": 50,
                 "port": {
                     "role": "GEM5 RESPONDER",
-                    "peer": "system.membus.mem_side_ports[0]",
+                    "peer": "system.crossbars0.mem_side_ports[0]",
                     "is_source": "False"
                 }
             },
@@ -1305,7 +1483,7 @@
                         "leaders": [],
                         "possible_states": []
                     },
-                    "range": "36507222016:68719476736",
+                    "range": "36507222016:68719476736:0:1048640:2097280",
                     "ranks_per_channel": 1,
                     "read_buffer_size": 64,
                     "tAAD": 454,
@@ -1390,7 +1568,7 @@
                 "write_low_thresh_perc": 50,
                 "port": {
                     "role": "GEM5 RESPONDER",
-                    "peer": "system.membus.mem_side_ports[1]",
+                    "peer": "system.crossbars0.mem_side_ports[1]",
                     "is_source": "False"
                 }
             },
@@ -1467,7 +1645,7 @@
                         "leaders": [],
                         "possible_states": []
                     },
-                    "range": "584115552256:1099511627776",
+                    "range": "584115552256:1099511627776:0:1048640:2097280",
                     "ranks_per_channel": 1,
                     "read_buffer_size": 64,
                     "tAAD": 454,
@@ -1552,7 +1730,7 @@
                 "write_low_thresh_perc": 50,
                 "port": {
                     "role": "GEM5 RESPONDER",
-                    "peer": "system.membus.mem_side_ports[2]",
+                    "peer": "system.crossbars0.mem_side_ports[2]",
                     "is_source": "False"
                 }
             },
@@ -1629,7 +1807,7 @@
                         "leaders": [],
                         "possible_states": []
                     },
-                    "range": "2147483648:4294967296",
+                    "range": "2147483648:4294967296:1:1048640:2097280",
                     "ranks_per_channel": 1,
                     "read_buffer_size": 64,
                     "tAAD": 454,
@@ -1714,7 +1892,7 @@
                 "write_low_thresh_perc": 50,
                 "port": {
                     "role": "GEM5 RESPONDER",
-                    "peer": "system.membus.mem_side_ports[3]",
+                    "peer": "system.crossbars1.mem_side_ports[0]",
                     "is_source": "False"
                 }
             },
@@ -1791,7 +1969,7 @@
                         "leaders": [],
                         "possible_states": []
                     },
-                    "range": "36507222016:68719476736",
+                    "range": "36507222016:68719476736:1:1048640:2097280",
                     "ranks_per_channel": 1,
                     "read_buffer_size": 64,
                     "tAAD": 454,
@@ -1876,7 +2054,7 @@
                 "write_low_thresh_perc": 50,
                 "port": {
                     "role": "GEM5 RESPONDER",
-                    "peer": "system.membus.mem_side_ports[4]",
+                    "peer": "system.crossbars1.mem_side_ports[1]",
                     "is_source": "False"
                 }
             },
@@ -1953,7 +2131,7 @@
                         "leaders": [],
                         "possible_states": []
                     },
-                    "range": "584115552256:1099511627776",
+                    "range": "584115552256:1099511627776:1:1048640:2097280",
                     "ranks_per_channel": 1,
                     "read_buffer_size": 64,
                     "tAAD": 454,
@@ -2038,7 +2216,7 @@
                 "write_low_thresh_perc": 50,
                 "port": {
                     "role": "GEM5 RESPONDER",
-                    "peer": "system.membus.mem_side_ports[5]",
+                    "peer": "system.crossbars1.mem_side_ports[2]",
                     "is_source": "False"
                 }
             },
@@ -2115,7 +2293,7 @@
                         "leaders": [],
                         "possible_states": []
                     },
-                    "range": "2147483648:4294967296",
+                    "range": "2147483648:4294967296:2:1048640:2097280",
                     "ranks_per_channel": 1,
                     "read_buffer_size": 64,
                     "tAAD": 454,
@@ -2200,7 +2378,7 @@
                 "write_low_thresh_perc": 50,
                 "port": {
                     "role": "GEM5 RESPONDER",
-                    "peer": "system.membus.mem_side_ports[6]",
+                    "peer": "system.crossbars2.mem_side_ports[0]",
                     "is_source": "False"
                 }
             },
@@ -2277,7 +2455,7 @@
                         "leaders": [],
                         "possible_states": []
                     },
-                    "range": "36507222016:68719476736",
+                    "range": "36507222016:68719476736:2:1048640:2097280",
                     "ranks_per_channel": 1,
                     "read_buffer_size": 64,
                     "tAAD": 454,
@@ -2362,7 +2540,7 @@
                 "write_low_thresh_perc": 50,
                 "port": {
                     "role": "GEM5 RESPONDER",
-                    "peer": "system.membus.mem_side_ports[7]",
+                    "peer": "system.crossbars2.mem_side_ports[1]",
                     "is_source": "False"
                 }
             },
@@ -2439,7 +2617,7 @@
                         "leaders": [],
                         "possible_states": []
                     },
-                    "range": "584115552256:1099511627776",
+                    "range": "584115552256:1099511627776:2:1048640:2097280",
                     "ranks_per_channel": 1,
                     "read_buffer_size": 64,
                     "tAAD": 454,
@@ -2524,7 +2702,7 @@
                 "write_low_thresh_perc": 50,
                 "port": {
                     "role": "GEM5 RESPONDER",
-                    "peer": "system.membus.mem_side_ports[8]",
+                    "peer": "system.crossbars2.mem_side_ports[2]",
                     "is_source": "False"
                 }
             },
@@ -2601,7 +2779,7 @@
                         "leaders": [],
                         "possible_states": []
                     },
-                    "range": "2147483648:4294967296",
+                    "range": "2147483648:4294967296:3:1048640:2097280",
                     "ranks_per_channel": 1,
                     "read_buffer_size": 64,
                     "tAAD": 454,
@@ -2686,7 +2864,7 @@
                 "write_low_thresh_perc": 50,
                 "port": {
                     "role": "GEM5 RESPONDER",
-                    "peer": "system.membus.mem_side_ports[9]",
+                    "peer": "system.crossbars3.mem_side_ports[0]",
                     "is_source": "False"
                 }
             },
@@ -2763,7 +2941,7 @@
                         "leaders": [],
                         "possible_states": []
                     },
-                    "range": "36507222016:68719476736",
+                    "range": "36507222016:68719476736:3:1048640:2097280",
                     "ranks_per_channel": 1,
                     "read_buffer_size": 64,
                     "tAAD": 454,
@@ -2848,7 +3026,7 @@
                 "write_low_thresh_perc": 50,
                 "port": {
                     "role": "GEM5 RESPONDER",
-                    "peer": "system.membus.mem_side_ports[10]",
+                    "peer": "system.crossbars3.mem_side_ports[1]",
                     "is_source": "False"
                 }
             },
@@ -2925,7 +3103,7 @@
                         "leaders": [],
                         "possible_states": []
                     },
-                    "range": "584115552256:1099511627776",
+                    "range": "584115552256:1099511627776:3:1048640:2097280",
                     "ranks_per_channel": 1,
                     "read_buffer_size": 64,
                     "tAAD": 454,
@@ -3010,7 +3188,7 @@
                 "write_low_thresh_perc": 50,
                 "port": {
                     "role": "GEM5 RESPONDER",
-                    "peer": "system.membus.mem_side_ports[11]",
+                    "peer": "system.crossbars3.mem_side_ports[2]",
                     "is_source": "False"
                 }
             }
@@ -3072,18 +3250,10 @@
             "mem_side_ports": {
                 "role": "GEM5 REQUESTOR",
                 "peer": [
-                    "system.mem_ctrls00.port",
-                    "system.mem_ctrls01.port",
-                    "system.mem_ctrls02.port",
-                    "system.mem_ctrls03.port",
-                    "system.mem_ctrls04.port",
-                    "system.mem_ctrls05.port",
-                    "system.mem_ctrls06.port",
-                    "system.mem_ctrls07.port",
-                    "system.mem_ctrls08.port",
-                    "system.mem_ctrls09.port",
-                    "system.mem_ctrls10.port",
-                    "system.mem_ctrls11.port"
+                    "system.crossbars0.cpu_side_ports[0]",
+                    "system.crossbars1.cpu_side_ports[0]",
+                    "system.crossbars2.cpu_side_ports[0]",
+                    "system.crossbars3.cpu_side_ports[0]"
                 ],
                 "is_source": "True"
             }

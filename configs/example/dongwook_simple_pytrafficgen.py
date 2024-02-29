@@ -105,6 +105,7 @@ if args.num_cpus > block_size:
 
 cpus = PyTrafficGen()
 
+
 system = System(
     cpu=cpus,
     clk_domain=SrcClockDomain(clock=args.sys_clock),
@@ -140,8 +141,11 @@ for (i, dma) in enumerate(dmas):
 
 print("dongwook debug] args: ", args)
 
+import math
 from common.CacheConfig import *
 from common.Caches import *
+from common import MemConfig
+#from src.mem.DRAMInterface import DRAMInterface
 
 # L1 bus
 system.cpu.l1bus = L1XBar()
@@ -197,34 +201,90 @@ for i in range(args.num_dmas):
 #    comm_monitor_mems = []
 #for i in range (args.num_dirs):
 #    comm_monitor_mems[i].cpu_side_port = system.membus.mem_side_ports
-    
-#system.mem_ctrl = MemCtrl()
-#system.mem_ctrl.dram = DDR5_4400_4x8()
-#system.mem_ctrl.dram.range = system.mem_ranges[0]
-#system.mem_ctrl.port = system.membus.mem_side_ports
 
+# dongwook start
+##if args.numa_high_bit:
+##    dir_bits = int(math.log(args.num_dirs, 2))
+##    intlv_size = 2 ** (args.numa_high_bit - dir_bits + 1)
+##else:
+##    intlv_size = args.cacheline_size
+
+intlv_size = block_size # 64
+xor_low_bit = 20 # options from falcon_garnet.ver
+crossbars = []
 mem_ctrls = []
-drams = []
-for i in range (args.num_dmas):
-    for j in range(len(system.mem_ranges)):
-        mem_ctrls.append(MemCtrl())
-        drams.append(DDR5_4400_4x8())
-        drams[i] = DDR5_4400_4x8()
-        mem_ctrls[i*3 + j].dram = drams[i]
-        #mem_ctrls[i*3 + j].dram[i] = DDR5_4400_4x8()
-        mem_ctrls[i*3 + j].dram.range = system.mem_ranges[j]
-        #mem_ctrls[i*3 + j].dram[i].range = system.mem_ranges[j]
-        mem_ctrls[i*3 + j].port = system.membus.mem_side_ports
-        #system.mem_ctrl0 = MemCtrl()
-        #system.mem_ctrl1 = MemCtrl()
-        #system.mem_ctrl0.dram = DDR5_4400_4x8()
-        #system.mem_ctrl1.dram = DDR5_4400_4x8()
-        #system.mem_ctrl0.dram.range = system.mem_ranges[0]
-        #system.mem_ctrl1.dram.range = system.mem_ranges[1]
-        #system.mem_ctrl0.port = system.membus.mem_side_ports
-        #system.mem_ctrl1.port = system.membus.mem_side_ports
-print("dongwook debig] drams[] = ", drams)
+index = 0
+for i in range (args.num_dirs):
+        crossbar = None
+        if len(system.mem_ranges) > 1:
+            crossbar = IOXBar(width=32)  # 32B = 256b
+            crossbars.append(crossbar)
+            crossbars[i].cpu_side_ports = system.membus.mem_side_ports
+
+        dir_ranges = []
+        for r in system.mem_ranges:
+            mem_type = ObjectList.mem_list.get(args.mem_type)
+            dram_intf = MemConfig.create_mem_intf(  # configs/common/MemConfig.py
+                mem_type,
+                r,  # 0x8000_0000 ~ 2GB, 0x8_8000_0000 ~ 30GB, 0x88_0000_0000 ~ 480GB
+                index,  # 0 ~ (number of dir_cntrl-1)
+                int(math.log(args.num_dirs, 2)),
+                intlv_size,
+                xor_low_bit,
+            )
+            if issubclass(mem_type, DRAMInterface):
+                mem_ctrl = m5.objects.MemCtrl(dram=dram_intf)
+            else:
+                mem_ctrl = dram_intf
+
+            #if args.access_backing_store:
+            #   dram_intf.kvm_map = False
+
+            mem_ctrls.append(mem_ctrl)
+            dir_ranges.append(dram_intf.range)
+
+            if crossbar != None:
+                mem_ctrl.port = crossbar.mem_side_ports
+
+            # Enable low-power DRAM states if option is set
+            if issubclass(mem_type, DRAMInterface):
+                mem_ctrl.dram.enable_dram_powerdown = (
+                    args.enable_dram_powerdown
+                )
+
+        index += 1
+
 system.mem_ctrls = mem_ctrls
+
+if len(crossbars) > 0:
+    system.crossbars = crossbars
+
+# dongwook end
+
+#drams = []
+#for i in range (args.num_dirs):
+#    drams.append(DDR5_4400_4x8())
+#
+#mem_ctrls = []
+#for i in range (args.num_dirs):
+#    for j in range(len(system.mem_ranges)):
+#        mem_ctrls.append(MemCtrl())
+#        mem_ctrls[i*len(system.mem_ranges) + j].dram = DDR5_4400_4x8()
+#        print("dongwook debug] mem_ctrls: ", i*len(system.mem_ranges) + j)
+#        print("dongwook debug] dram: ", drams[i])
+#        mem_ctrls[i*len(system.mem_ranges) + j].dram.range = system.mem_ranges[j]
+#        #mem_ctrls[i*3 + j].dram[i].range = system.mem_ranges[j]
+#        mem_ctrls[i*len(system.mem_ranges) + j].port = system.membus.mem_side_ports
+#        #system.mem_ctrl0 = MemCtrl()
+#        #system.mem_ctrl1 = MemCtrl()
+#        #system.mem_ctrl0.dram = DDR5_4400_4x8()
+#        #system.mem_ctrl1.dram = DDR5_4400_4x8()
+#        #system.mem_ctrl0.dram.range = system.mem_ranges[0]
+#        #system.mem_ctrl1.dram.range = system.mem_ranges[1]
+#        #system.mem_ctrl0.port = system.membus.mem_side_ports
+#        #system.mem_ctrl1.port = system.membus.mem_side_ports
+#print("dongwook debug] drams: ", drams)
+#system.mem_ctrls = mem_ctrls
 
 # Create a top-level voltage domain and clock domain
 system.voltage_domain = VoltageDomain(voltage=args.sys_voltage)
