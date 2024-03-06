@@ -1,0 +1,16 @@
+Global frequency set at 1000000000000 ticks per second
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 23.0.1.0
+gem5 compiled Mar  6 2024 06:06:25
+gem5 started Mar  6 2024 06:09:06
+gem5 executing on 403fa31dd0c1, pid 2719
+command line: /home/gem5/build/ARM/gem5.opt --outdir /home/gem5/run_script/output_dongwook_simple_pytrafficgen /home/gem5/configs/example/dongwook_simple_pytrafficgen.py --num-cpus 1 --num-dmas 4 --num-dirs 4 --traffic_mode_cpu trace --traffic_mode_dma trace --trace_duration 50000 --mem-type DDR5_4400_4x8 --mem-channels 1 --sys-clock 900MHz
+
+dongwook debug] args.num_cpus:  1
+dongwook debug] args.num_dmas:  4
+dongwook debug] args.num_dirs:  4
+dongwook debug] len(system.mem_ranges):  3
+dongwook debug] args:  Namespace(num_cpus=1, sys_voltage='1.0V', sys_clock='900MHz', list_mem_types=None, mem_type='DDR5_4400_4x8', mem_channels=1, mem_ranks=None, mem_size='512MB', enable_dram_powerdown=False, mem_channels_intlv=0, memchecker=False, external_memory_system=None, tlm_memory=None, caches=False, l2cache=False, num_dirs=4, num_l2caches=1, num_l3caches=1, l1d_size='64kB', l1i_size='32kB', l2_size='2MB', l3_size='16MB', l1d_assoc=2, l1i_assoc=2, l2_assoc=8, l3_assoc=16, cacheline_size=64, ruby=False, abs_max_tick=18446744073709551615, rel_max_tick=None, maxtime=None, param=[], traffic_mode=None, traffic_mode_cpu='trace', traffic_mode_dma='trace', trace_duration=50000, rd_prct=50, maxloads=0, progress=1000, num_dmas=4, functional=0, suppress_func_errors=False, icache_size='32kB', dcache_size='32kB', icache_assoc=4, dcache_assoc=4, l2cache_size='128kB', l2cache_assoc=4, l3cache_size='2MB', l3cache_assoc=16)
+Exiting @ tick 50000 because system.cpu has encountered the exit state and will terminate the simulation.

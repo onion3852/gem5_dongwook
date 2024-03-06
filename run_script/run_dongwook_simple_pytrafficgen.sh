@@ -12,7 +12,7 @@ $GEM5_PATH/gem5.opt \
 	--num-dirs 4 \
 	--traffic_mode_cpu trace \
 	--traffic_mode_dma trace \
-	--trace_duration 500000000 \
+	--trace_duration 50000 \
 	--mem-type DDR5_4400_4x8 \
     --mem-channels 1 \
 	--sys-clock "900MHz" \
@@ -25,4 +25,3 @@ $GEM5_PATH/gem5.opt \
 	#--mem-channels 2 \
 	#--trace_duration 4130000000 \
     #--num-cpus 2 \
-	

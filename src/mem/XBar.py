@@ -124,7 +124,10 @@ class CoherentXBar(BaseXBar):
     max_outstanding_snoops = Param.Int(512, "Max. outstanding snoops allowed")
 
     # Maximum routing table size for sanity checks
-    max_routing_table_size = Param.Int(512, "Max. routing table size")
+    # dongwook start
+    max_routing_table_size = Param.Int(1024, "Max. routing table size")
+    # max_routing_table_size = Param.Int(512, "Max. routing table size")
+    # dongwook end
 
     # Determine how this crossbar handles packets where caches have
     # already committed to responding, by establishing if the crossbar
@@ -155,6 +158,7 @@ class SnoopFilter(SimObject):
     # Sanity check on max capacity to track, adjust if needed.
     max_capacity = Param.MemorySize("8MiB", "Maximum capacity of snoop filter")
 
+
 # dongwook start
 class L1XBar(CoherentXBar):
     # 256-bit crossbar by default
@@ -175,7 +179,12 @@ class L1XBar(CoherentXBar):
     # This specialisation of the coherent crossbar is to be considered
     # the point of unification, it connects the dcache and the icache
     # to the first level of unified cache.
-    point_of_unification = True
+    point_of_unification = False
+    # dongwook start
+    # point_of_unification = True
+    # dongwook end
+
+
 # dongwook end
 
 
@@ -223,7 +232,11 @@ class L3XBar(CoherentXBar):
     # This specialisation of the coherent crossbar is to be considered
     # the point of unification, it connects the dcache and the icache
     # to the first level of unified cache.
-    point_of_unification = True
+    # dongwook start
+    point_of_unification = False
+    # dongwook end
+
+
 # dongwook end
 
 
@@ -262,7 +275,10 @@ class SystemXBar(CoherentXBar):
 # to also define an off-chip I/O crossbar such as PCIe.
 class IOXBar(NoncoherentXBar):
     # 128-bit crossbar by default
-    width = 16
+    # dongwook start
+    # width = 32
+    # width = 16
+    # dongwook end
 
     # Assume a simpler datapath than a coherent crossbar, incuring
     # less pipeline stages for decision making and forwarding of
